@@ -5,7 +5,7 @@ function island(loc: location, r: integer):
     set {_l} to location of loop-block
     set loop-block to air
     summon ("falling %{_block}%" parsed as entitytype) at {_l} with nbt (nbt compound from "{NoGravity:1b}")
-    summon falling sand at {_l}
+    summon falling sand at {_l} with nbt (nbt compound from "{NoGravity:1b}")
     wait 1 tick
 
 command /island <integer>:

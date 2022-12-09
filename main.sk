@@ -7,12 +7,12 @@ on right click:
         set slot loop-value parsed as integer of {_inv} to {bookshelf::%{_loc}%::%loop-value%}
     
     set metadata tag "gui.bookshelf" of player to {_inv}
-    set metadata tag "bookshelf.loc" of {_inv} to {_loc}
+    set metadata tag "bookshelf.loc" of player to {_loc}
     open {_inv} to player
 
 on inventory close:
     event-inventory = metadata tag "gui.bookshelf" of player
-    set {_loc} to metadata tag "bookshelf.loc" of event-inventory
+    set {_loc} to metadata tag "bookshelf.loc" of player
     delete {bookshelf::%{_loc}%::*}
     loop integers between 0 and 8:
         set {_item} to slot loop-value of event-inventory

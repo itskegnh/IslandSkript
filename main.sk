@@ -1,5 +1,7 @@
 on right click:
     type of event-block is bookshelf
+    player is not sneaking
+    cancel event
     set {_loc} to location of event-block
 
     set {_inv} to dropper inventory named "Bookshelf"

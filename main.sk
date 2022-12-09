@@ -1,13 +1,13 @@
-function island(loc: location, r: integer):
-  loop all blocks in radius {_r} of {_loc}:
-    loop-block is not air
-    set {_block} to type of loop-block
-    set {_l} to location of loop-block
-    set loop-block to air
-    summon ("falling %{_block}%" parsed as entitytype) with nbt (nbt compound from "{NoGravity:1b}") at {_l}
-    wait 1 tick
-
-command /island <integer>:
-  trigger:
-    set {_loc} to target block
-    island({_loc}, arg-1)
+command /gravity:
+    trigger:
+        if {gravity} is set:
+            delete {gravity}
+            stop
+        set {gravity} to true
+        while {gravity} is set:
+            loop all blocks in radius 10 of player:
+                if loop-block is not air:
+                    if block 1 meter below loop-block is air:
+                        spawn "falling %loop-block%" parsed as entity type 0.5 meters below loop-block
+                        set loop-block to air
+            wait a tick

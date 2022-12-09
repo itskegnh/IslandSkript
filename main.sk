@@ -4,7 +4,7 @@ function island(loc: location, r: integer):
     set {_block} to type of loop-block
     set {_l} to location of loop-block
     set loop-block to air
-    summon ("falling %{_block}%" parsed as entitytype) at {_l}
+    summon ("falling %{_block}%" parsed as entitytype) with nbt (nbt compound from "{NoGravity:1b}") at {_l}
     wait 1 tick
 
 command /island <integer>:

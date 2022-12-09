@@ -1,14 +1,21 @@
-command /gravity:
-    trigger:
-        if {gravity} is set:
-            delete {gravity}
-            stop
-        set {gravity} to true
-        while {gravity} is set:
-            loop all blocks in radius 10 of player:
-                loop-block is not air
-                block at (loop-block ~ vector(0, -1, 0)) is air
-                spawn "falling %type of loop-block%" parsed as entity type at (location of loop-block ~ vector(0, -0.5, 0))
-#                send type of loop-block to player
-                set loop-block to air
-            wait a tick
+on right click:
+    type of event-block is bookshelf
+    set {_loc} to location of event-block
+
+    set {_inv} to dropper inventory named "Bookshelf"
+    loop indices of {bookshelf::%{_loc}%::*}:
+        set slot loop-value parsed as integer of {_inv} to {bookshelf::%{_loc}%::%loop-value%}
+    
+    set metadata tag "gui.bookshelf" of player to {_inv}
+    set metadata tag "bookshelf.loc" of {_inv} to {_loc}
+    open {_inv} to player
+
+on inventory close:
+    event-inventory = metadata tag "gui.bookshelf" of player
+    set {_loc} to metadata tag "bookshelf.loc" of event-inventory
+    delete {bookshelf::%{_loc}%::*}
+    loop integers between 0 and 8:
+        set {_item} to slot loop-value of event-inventory
+        {_item} is not air
+        set {bookshelf::%{_loc}%::%loop-value%} to {_item}
+        

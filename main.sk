@@ -4,6 +4,10 @@ on right click:
     cancel event
     set {_loc} to location of event-block
 
+    loop all players:
+        metadata tag "bookshelf.loc" of player = {_loc}
+        send "&c&l❌ &8• &fOnly 1 player can open a bookshelf at a time!" to player
+
     set {_inv} to dropper inventory named "Bookshelf"
     loop indices of {bookshelf::%{_loc}%::*}:
         set slot loop-value parsed as integer of {_inv} to {bookshelf::%{_loc}%::%loop-value%}
@@ -27,6 +31,10 @@ on inventory close:
 on break:
     event-block is bookshelf
     set {_loc} to location of event-block
+
+    loop all players:
+        metadata tag "bookshelf.loc" of player = {_loc}
+        close loop-player's inventory
 
     loop {bookshelf::%{_loc}%::*}:
         drop loop-value at {_loc}

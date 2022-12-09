@@ -8,6 +8,7 @@ command /gravity:
             loop all blocks in radius 10 of player:
                 loop-block is not air
                 block at (loop-block ~ vector(0, -1, 0)) is air
-                spawn "falling %loop-block%" parsed as entity type at (location of loop-block ~ vector(0, -0.5, 0))
+                spawn "falling %type of loop-block%" parsed as entity type at (location of loop-block ~ vector(0, -0.5, 0))
+                send type of loop-block to player
                 set loop-block to air
             wait a tick

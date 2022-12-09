@@ -1,6 +1,6 @@
 function island(loc: location, r: integer):
   loop all blocks in radius {_r} of {_loc}:
-    set block at loop-block ~ vector(0, 50, 0) to type of loop-block
+    set block at (loop-block's location ~ vector(0, 50, 0)) to type of loop-block
     set loop-block to air
     wait 1 tick
 

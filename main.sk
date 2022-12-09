@@ -1,7 +1,10 @@
 function island(loc: location, r: integer):
   loop all blocks in radius {_r} of {_loc}:
-    set block at (loop-block's location ~ vector(0, 50, 0)) to type of loop-block
+    loop-block is not air
+    set {_block} to type of loop-block
+    set {_l} to location of loop-block
     set loop-block to air
+    summon "falling %{_block}%" parsed as itemtype at {_l} with nbt (nbt compound from "{NoGravity:1b}")
     wait 1 tick
 
 command /island <integer>:

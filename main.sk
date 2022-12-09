@@ -20,4 +20,15 @@ on inventory close:
         set {_item} to slot loop-value of event-inventory
         {_item} is not air
         set {bookshelf::%{_loc}%::%loop-value%} to {_item}
-        
+    
+    delete metadata tag "gui.bookshelf" of player
+    delete metadata tag "bookshelf.loc" of player
+
+on break:
+    event-block is bookshelf
+    set {_loc} to location of event-block
+
+    loop {bookshelf::%{_loc}%::*}:
+        drop loop-value at {_loc}
+    
+    delete {bookshelf::%{_loc}%::*}

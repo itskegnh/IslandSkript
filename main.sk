@@ -27,7 +27,7 @@ on rightclick:
     open {_gui} to player
 
 on drop:
-    set {_} to nbt compound of dropped item
+    set {_} to nbt compound of event-item
     send "a"
     tag "tag;backpack;id" of {_} is set
     send "b"

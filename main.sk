@@ -9,15 +9,15 @@ command /backpack <integer=3>:
         add 1 to {backpack_id}
         set tag "tag;backpack;id" of {_nbt} to {backpack_id}
         set {_item} to item from nbt {_nbt}
-
         give player {_item}
+        send " &a&l✔ &8• &fYou have been given a backpack with &e%arg * 9% &fslots!"
+        play sound "block.note_block.bit" with pitch 1 to player
 
 on rightclick:
     set {_} to nbt compound of player's tool
     tag "tag;backpack;id" of {_} is set
     cancel event
     set {_size} to tag "tag;backpack;size" of {_}
-    send {_size} to player
     set {_gui} to chest inventory with {_size} rows named "&6Backpack"
     set {_id} to tag "tag;backpack;id" of {_}
     loop indices of {backpack::%{_id}%::*}:

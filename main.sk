@@ -33,7 +33,7 @@ on drop:
     {_id} = metadata tag "backpack.open" of player
     cancel event
     send " &c&l❌ &8• &fYou cannot drop your backpack!"
-    play sound "block.note_block.bit" at player with pitch 0
+    play sound "block.note_block.bit" at player with volume 1 and pitch 0
 
 on inventory close:
     metadata tag "backpack.gui" of player = event-inventory

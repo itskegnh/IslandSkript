@@ -11,3 +11,40 @@ command /backpack <integer=3>:
         set {_item} to item from nbt {_nbt}
 
         give player {_item}
+
+on rightclick:
+    set {_} to nbt compound of player's tool
+    tag "tag;backpack;id" of {_} is set
+    cancel event
+    set {_gui} to chest inventory with (tag "tag;backpack;size" of {_} parsed as integer) rows named "&6Backpack"
+    set {_id} to tag "tag;backpack;id" of {_} parsed as integer
+    loop indices of {backpack::%{_id}%::*}:
+        set slot (loop-value parsed as integer) of {_gui} to {backpack::%{_id}%::%loop-value%}
+    set metadata tag "backpack.open" of player to {_id}
+    set metadata tag "backpack.gui" of player to {_gui}
+    open {_gui} to player
+
+on drop:
+    set {_} to nbt compound of dropped item
+    tag "tag;backpack;id" of {_} is set
+    set {_id} to tag "tag;backpack;id" of {_} parsed as integer
+    {_id} = metadata tag "backpack.open" of player
+    cancel event
+    send "&c&l❌ &8• &fYou cannot drop your backpack!"
+
+on inventory close:
+    metadata tag "backpack.gui" of player = event-inventory
+    set {_id} to metadata tag "backpack.open" of player parsed as integer
+    loop 27 times:
+        set {_} to nbt compound of slot loop-value - 1 of event-inventory
+        tag "tag;backpack;id" of {_} is set:
+            give player slot loop-value - 1 of event-inventory
+            set slot loop-value - 1 of event-inventory to air
+        else:
+            set {backpack::%{_id}%::%loop-value - 1%} to slot loop-value - 1 of event-inventory
+    delete metadata tag "backpack.open" of player
+    delete metadata tag "backpack.gui" of player
+
+
+
+    

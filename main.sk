@@ -17,6 +17,7 @@ on rightclick:
     tag "tag;backpack;id" of {_} is set
     cancel event
     set {_size} to tag "tag;backpack;size" of {_}
+    send {_size} to player
     set {_gui} to chest inventory with ({_size} parsed as integer) rows named "&6Backpack"
     set {_id} to tag "tag;backpack;id" of {_}
     loop indices of {backpack::%{_id}%::*}:

@@ -28,16 +28,21 @@ on rightclick:
 
 on drop:
     set {_} to nbt compound of dropped item
+    send "a"
     tag "tag;backpack;id" of {_} is set
+    send "b"
     set {_id} to tag "tag;backpack;id" of {_}
+    send "c"
     {_id} = metadata tag "backpack.open" of player
+    send "d"
     cancel event
     send "&c&l❌ &8• &fYou cannot drop your backpack!"
 
 on inventory close:
     metadata tag "backpack.gui" of player = event-inventory
     set {_id} to metadata tag "backpack.open" of player
-    loop 27 times:
+    loop 54 times:
+        slot loop-value - 1 of event-inventory is not air
         set {_} to nbt compound of slot loop-value - 1 of event-inventory
         tag "tag;backpack;id" of {_} is set:
             give player slot loop-value - 1 of event-inventory

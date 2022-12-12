@@ -38,14 +38,21 @@ on drop:
 on inventory close:
     metadata tag "backpack.gui" of player = event-inventory
     set {_id} to metadata tag "backpack.open" of player
+    set {_return} to false
     loop 54 times:
         slot loop-value - 1 of event-inventory is not air
         set {_} to nbt compound of slot loop-value - 1 of event-inventory
         tag "tag;backpack;id" of {_} is set:
-            give player slot loop-value - 1 of event-inventory
+            player can hold slot loop-value - 1 of event-inventory:
+                give player slot loop-value - 1 of event-inventory
+            else:
+                drop slot loop-value - 1 of event-inventory at player
             set slot loop-value - 1 of event-inventory to air
+            set {_return} to true
         else:
             set {backpack::%{_id}%::%loop-value - 1%} to slot loop-value - 1 of event-inventory
+    if {_return} is true:
+        send " &c&l❌ &8• &fYou cannot store a backpack inside a backpack!"
     delete metadata tag "backpack.open" of player
     delete metadata tag "backpack.gui" of player
 

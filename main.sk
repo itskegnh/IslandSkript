@@ -25,6 +25,7 @@ on rightclick:
     set metadata tag "backpack.open" of player to {_id}
     set metadata tag "backpack.gui" of player to {_gui}
     open {_gui} to player
+    play sound "block.note_block.pling" with pitch 1 to player
 
 on drop:
     set {_} to nbt compound of event-item

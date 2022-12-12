@@ -30,6 +30,7 @@ on rightclick:
         tag "tag;backpack;id" of {_} is set
         cancel event
         send " &c&l❌ &8• &fYou must hold a backpack in your main hand!"
+        play sound "block.note_block.bit" with pitch 0 to player
 
 on drop:
     set {_} to nbt compound of event-item

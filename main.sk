@@ -16,7 +16,8 @@ on rightclick:
     set {_} to nbt compound of player's tool
     tag "tag;backpack;id" of {_} is set
     cancel event
-    set {_gui} to chest inventory with ((tag "tag;backpack;size" of {_}) parsed as integer) rows named "&6Backpack"
+    set {_size} to tag "tag;backpack;size" of {_}
+    set {_gui} to chest inventory with ({_size} parsed as integer) rows named "&6Backpack"
     set {_id} to tag "tag;backpack;id" of {_}
     loop indices of {backpack::%{_id}%::*}:
         set slot (loop-value parsed as integer) of {_gui} to {backpack::%{_id}%::%loop-value%}

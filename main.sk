@@ -46,13 +46,14 @@ on inventory close:
             player can hold slot loop-value - 1 of event-inventory:
                 give player slot loop-value - 1 of event-inventory
             else:
-                drop slot loop-value - 1 of event-inventory at player
+                drop slot loop-value - 1 of event-inventory at player ~ vector(0, 1, 0)
             set slot loop-value - 1 of event-inventory to air
             set {_return} to true
         else:
             set {backpack::%{_id}%::%loop-value - 1%} to slot loop-value - 1 of event-inventory
     if {_return} is true:
         send " &c&l❌ &8• &fYou cannot store a backpack inside a backpack!"
+        play sound "block.note_block.bit" with pitch 0 to player
     delete metadata tag "backpack.open" of player
     delete metadata tag "backpack.gui" of player
 

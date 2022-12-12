@@ -1,42 +1,13 @@
-on right click:
-    type of event-block is bookshelf
-    player is not sneaking
-    cancel event
-    set {_loc} to location of event-block
+command /backpack <integer=3>:
+    permission: backpack.admin
+    permission message: &cInsufficient Permisisons!
+    usage: &cCommand Usage: &f/backpack <size>
+    trigger:
+        set {_item} to minecart with chest named "&6Backpack" with lore "&8(Right-Click)", "&8• &7Rows: &e%arg-1 * 9% slots"
+        set {_nbt} to nbt compound of {_item}
+        set tag "tag;backpack;size" of {_nbt} to arg-1
+        add 1 to {backpack_id}
+        set tag "tag;backpack;id" of {_nbt} to {backpack_id}
+        set {_item} to item from nbt {_nbt}
 
-    loop all players:
-        metadata tag "bookshelf.loc" of player = {_loc}
-        send "&c&l❌ &8• &fOnly 1 player can open a bookshelf at a time!" to player
-
-    set {_inv} to dropper inventory named "Bookshelf"
-    loop indices of {bookshelf::%{_loc}%::*}:
-        set slot loop-value parsed as integer of {_inv} to {bookshelf::%{_loc}%::%loop-value%}
-    
-    set metadata tag "gui.bookshelf" of player to {_inv}
-    set metadata tag "bookshelf.loc" of player to {_loc}
-    open {_inv} to player
-
-on inventory close:
-    event-inventory = metadata tag "gui.bookshelf" of player
-    set {_loc} to metadata tag "bookshelf.loc" of player
-    delete {bookshelf::%{_loc}%::*}
-    loop integers between 0 and 8:
-        set {_item} to slot loop-value of event-inventory
-        {_item} is not air
-        set {bookshelf::%{_loc}%::%loop-value%} to {_item}
-    
-    delete metadata tag "gui.bookshelf" of player
-    delete metadata tag "bookshelf.loc" of player
-
-on break:
-    event-block is bookshelf
-    set {_loc} to location of event-block
-
-    loop all players:
-        metadata tag "bookshelf.loc" of player = {_loc}
-        close loop-player's inventory
-
-    loop {bookshelf::%{_loc}%::*}:
-        drop loop-value at {_loc}
-    
-    delete {bookshelf::%{_loc}%::*}
+        give player {_item}
